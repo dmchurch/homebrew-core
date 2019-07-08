@@ -35,6 +35,12 @@ class Openssh < Formula
     sha256 "3505c58bf1e584c8af92d916fe5f3f1899a6b15cc64a00ddece1dc0874b2f78f"
   end
 
+  # Add PKCS#11 label support until merged upstream
+  patch do
+    url "https://patch-diff.githubusercontent.com/raw/openssh/openssh-portable/pull/138.diff"
+    sha256 "d49fa45c434fa8d44c79cb8f5509a213e5730d2a5f5a9591af946b71b6d1b1b7"
+  end
+
   def install
     ENV.append "CPPFLAGS", "-D__APPLE_SANDBOX_NAMED_EXTERNAL__"
 
