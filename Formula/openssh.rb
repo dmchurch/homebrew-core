@@ -35,6 +35,32 @@ class Openssh < Formula
     sha256 "3505c58bf1e584c8af92d916fe5f3f1899a6b15cc64a00ddece1dc0874b2f78f"
   end
 
+  # More patches from Apple.
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/openssh-apple-support/openssh/patch-audit-bsm.c-apple-audit-support.diff"
+    sha256 "bc9858980b81a1c3b6d7200f08b527aa960c2f9685e26ba46cfe7b07212aef37"
+  end
+
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/openssh-apple-support/openssh/patch-clientloop.c-apple-launchd-display-variable.diff"
+    sha256 "cd157fa5b0d8f66106d80686cedff6857720a4073f8d1bfb6d71bd8709472f5c"
+  end
+
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/openssh-apple-support/openssh/patch-groupaccess.c-apple-group-support.diff"
+    sha256 "c825bd95573d67889a0f0e748ae7359c85a5c211fb2a9fd63a50c001caefb8fd"
+  end
+
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/openssh-apple-support/openssh/patch-session.c-apple-tmpdir-support.diff"
+    sha256 "0aead1becfd3293245d684cf11195ed52383e5b86c1ff321d09c8602d1c4a1ca"
+  end
+
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/openssh-apple-support/openssh/patch-ssh-agent.c-launchd-support.diff"
+    sha256 "cb2f50c13eb7076545d41590df441cf4208d558da47176315bd60baa5f0a171f"
+  end
+
   # Add PKCS#11 label support until merged upstream
   patch do
     url "https://patch-diff.githubusercontent.com/raw/openssh/openssh-portable/pull/138.diff"
@@ -43,6 +69,10 @@ class Openssh < Formula
 
   def install
     ENV.append "CPPFLAGS", "-D__APPLE_SANDBOX_NAMED_EXTERNAL__"
+    ENV.append "CPPFLAGS", "-D__APPLE_DISPLAY_VAR__"
+    ENV.append "CPPFLAGS", "-D__APPLE_MEMBERSHIP__"
+    ENV.append "CPPFLAGS", "-D__APPLE_TMPDIR__"
+    ENV.append "CPPFLAGS", "-D__APPLE_LAUNCHD__"
 
     # Ensure sandbox profile prefix is correct.
     # We introduce this issue with patching, it's not an upstream bug.
