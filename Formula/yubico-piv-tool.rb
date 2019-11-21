@@ -11,6 +11,11 @@ class YubicoPivTool < Formula
     sha256 "05935fa33b0103d8ff2909693f4476283cf2be49e2864b78caea85cc59cbae32" => :sierra
   end
 
+  patch do
+    url "https://raw.githubusercontent.com/dmchurch/formula-patches/yubico-piv-tool-pinpad/yubico-piv-tool/patch-pinpad-1.7.0.diff"
+    sha256 "efb5a8d540f985ff0ed89a043657da41b421b2099b0b570bef91a21e010e0323"
+  end
+
   depends_on "check" => :build
   depends_on "pkg-config" => :build
   depends_on "openssl"
